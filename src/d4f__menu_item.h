@@ -11,16 +11,16 @@
 
 #ifdef __cplusplus
 extern "C" {
-    #endif
+#endif
 
     typedef void* d4f__MenuItem;
 
-    d4f__MenuItem d4f__MenuItem_create(d4f__MenuItemOptions options);
-    void d4f__MenuItem_destroy(d4f__MenuItem self);
-    const char* d4f__MenuItem_getTitle(const d4f__MenuItem self);
-    d4f__MenuItemHandler d4f__MenuItem_getHandler(const d4f__MenuItem self);
+    EXTERN d4f__MenuItem d4f__MenuItem_create(const d4f__MenuItemOptions options);
+    EXTERN void d4f__MenuItem_destroy(const d4f__MenuItem self);
+    EXTERN const char* d4f__MenuItem_getTitle(const d4f__MenuItem self);
+    EXTERN d4f__MenuItemHandler d4f__MenuItem_getHandler(const d4f__MenuItem self);
 
-    #ifdef __cplusplus
+#ifdef __cplusplus
 }
 #endif
 

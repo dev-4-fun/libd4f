@@ -1,18 +1,22 @@
 SHELL = /bin/sh
 
-SOURCE_DIR=./src
 INCLUDE_DIR=./include
 LIB_DIR=./lib
-TEST_DIR=./tests
+
+SOURCE_DIR=./src
 OBJECT_DIR=./obj
+
+TEST_DIR=./tests
 
 CC = clang
 CFLAGS = -std=c89 -Wall -Wextra -Werror -g -I$(INCLUDE_DIR)
+
 SOURCES = $(wildcard $(SOURCE_DIR)/*.c)
 LIB_OBJECTS = $(patsubst $(SOURCE_DIR)/%.c, $(OBJECT_DIR)/%.o, $(SOURCES))
+LIB = d4f
+
 TEST_SOURCES = $(wildcard $(TEST_DIR)/*.c)
 TESTS = $(patsubst $(TEST_DIR)/%.c, $(TEST_DIR)/bin/%, $(TEST_SOURCES))
-LIB = d4f
 
 all: build test
 
@@ -22,15 +26,15 @@ $(OBJECT_DIR)/%.o: $(SOURCE_DIR)/%.c
 $(LIB): $(LIB_OBJECTS)
 	ar rcs $(LIB_DIR)/lib$@.a $?
 
+$(TEST_DIR)/bin/%: $(TEST_DIR)/%.c $(LIB)
+	$(CC) $(CFLAGS) -o $@ $< -L$(LIB_DIR) -l$(LIB) 
+
 build: dirs test_dirs $(LIB) $(TESTS)
 
 test: test_dirs $(TESTS)
 	@for test in $(TESTS); do \
 		$$test; \
 	done;
-
-$(TEST_DIR)/bin/%: $(TEST_DIR)/%.c $(LIB)
-	$(CC) $(CFLAGS) -o $@ $< -L$(LIB_DIR) -l$(LIB) 
 
 clean:
 	rm -rf $(OBJECT_DIR)/*

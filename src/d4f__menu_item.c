@@ -41,7 +41,9 @@ void d4f__MenuItem_destroy(d4f__MenuItem self) {
     struct d4f__MenuItem* item = self;
 
     d4f__String_destroy(item->title);
-    free(item);
+
+    free(self);
+    self = NULL;
 }
 
 const char* d4f__MenuItem_getTitle(const d4f__MenuItem self) {

@@ -1,6 +1,8 @@
 #ifndef D4F__MENU_H
 #define D4F__MENU_H
 
+#include <stdlib.h>
+
 #include "d4f__bool.h"
 
 #ifdef D4F__MENU_IMPORT

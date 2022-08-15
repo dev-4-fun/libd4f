@@ -21,4 +21,5 @@ void d4f__String_destroy(char* self) {
     }
 
     free(self);
+    self = NULL;
 }

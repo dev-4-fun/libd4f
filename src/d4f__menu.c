@@ -52,6 +52,7 @@ void d4f__Menu_destroy(d4f__Menu self) {
     }
 
     free(self);
+    self = NULL;
 }
 
 d4f__BOOL d4f__Menu_addItem(d4f__Menu self, const d4f__MenuItemOptions options) {
