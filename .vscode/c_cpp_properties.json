@@ -1,19 +1,15 @@
 {
     "configurations": [
         {
-            "name": "Mac",
+            "name": "libd4f config",
             "includePath": [
                 "${workspaceFolder}/include"
             ],
             "defines": [],
-            "macFrameworkPath": [
-                "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks"
-            ],
-            "compilerPath": "/usr/bin/clang",
+            "compilerPath": "/usr/bin/gcc",
             "cStandard": "c89",
             "cppStandard": "c++98",
-            "intelliSenseMode": "macos-clang-arm64",
-            "configurationProvider": "ms-vscode.makefile-tools"
+            "intelliSenseMode": "${default}"
         }
     ],
     "version": 4
