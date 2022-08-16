@@ -1,7 +1,7 @@
 #ifndef D4F__MENU_ITEM_H
 #define D4F__MENU_ITEM_H
 
-#include "d4f__menu.h"
+#include "d4f__menu_types.h"
 
 #ifdef D4F__MENU_ITEM_IMPORT
 #define EXTERN

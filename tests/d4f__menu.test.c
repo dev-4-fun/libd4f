@@ -3,172 +3,72 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "test_case.h"
+#define D4F__MENU_NS
 #include "d4f__menu.h"
 
-d4f__BOOL b_running;
-d4f__Menu menu_main, menu_options, menu_current;
+Menu menu;
+void handler() {};
+MenuItemOptions options[] = {
+    {
+        .title = "Title",
+        .handler = handler
+    },
+};
 
-void handler_new_game(void);
-void handler_load_game(void);
-void handler_options(void);
-void handler_exit(void);
-void handler_options_audio();
-void handler_options_video();
-void handler_options_controls();
-void handler_options_back();
+void init();
+void done();
 
-d4f__Menu createMenu(d4f__MenuItemOptions options[], size_t num_items);
-void createMainMenu(void);
-void createOptionsMenu(void);
-void showCurrentMenu(void);
-
-void onInit(void);
-void onExit(void);
+void create();
+void addItem();
+void length();
+void getItemTitle();
+void getItemHandler();
 
 int main() {
-    onInit();
+    TestSuite("d4f__Menu", init);
 
-    while (b_running) {
-        showCurrentMenu();
-    }
+    TestCase(create);
+    TestCase(addItem);
+    TestCase(length);
+    TestCase(getItemTitle);
+    TestCase(getItemHandler);
 
-    onExit();
+    TestDone(done);
     return 0;
 }
 
-void handler_new_game() {
-    printf("New game selected\n");
+void init() {
+    menu = Menu_create(2);
 }
 
-void handler_load_game() {
-    printf("Load game selected\n");
+void done() {
+    Menu_destroy(menu);
 }
 
-void handler_options() {
-    menu_current = menu_options;
-    showCurrentMenu();
+void create() {
+    assert(menu != NULL);
 }
 
-void handler_exit() {
-    b_running = FALSE;
+void addItem() {
+    Menu_addItem(menu, options[0]);
 }
 
-void handler_options_audio() {
-    printf("Options Audio selected\n");
+void length() {
+    size_t length = Menu_length(menu);
+    assert(length = 1);
 }
 
-void handler_options_video() {
-    printf("Options Video selected\n");
+void getItemTitle() {
+    const char* title = Menu_getItemTitle(menu, 0);
+    int result = strcmp(title, options[0].title);
+    assert(result == 0);
 }
 
-void handler_options_controls() {
-    printf("Options Controlls selected\n");
-}
-
-void handler_options_back() {
-    menu_current = menu_main;
-    showCurrentMenu();
+void getItemHandler() {
+    MenuItemHandler item_handler = Menu_getItemHandler(menu, 0);
+    assert(item_handler == options[0].handler);
 }
 
 
-d4f__Menu createMenu(d4f__MenuItemOptions options[], size_t num_items) {
-    d4f__Menu menu = d4f__Menu_create(num_items);
-    if (menu == NULL) {
-        abort();
-    }
-
-    size_t i;
-    for (i = 0; i < num_items; i++) {
-        d4f__Menu_addItem(menu, options[i]);
-    }
-
-    return menu;
-}
-
-void createMainMenu() {
-    d4f__MenuItemOptions options[] = {
-        {
-            .title = "New game",
-            .handler = handler_new_game
-        },
-        {
-            .title = "Load game",
-            .handler = handler_load_game
-        },
-        {
-            .title = "Options",
-            .handler = handler_options
-        },
-        {
-            .title = "Exit",
-            .handler = handler_exit
-        }
-    };
-
-    menu_main = createMenu(options, 4);
-}
-
-void createOptionsMenu() {
-    d4f__MenuItemOptions options[] = {
-        {
-            .title = "Audio",
-            .handler = handler_options_audio
-        },
-        {
-            .title = "Video",
-            .handler = handler_options_video
-        },
-        {
-            .title = "Controls",
-            .handler = handler_options_controls
-        },
-        {
-            .title = "Back",
-            .handler = handler_options_back
-        }
-    };
-
-    menu_options = createMenu(options, 4);
-}
-
-void showCurrentMenu() {
-    assert(menu_current != NULL);
-
-    int i;
-    int item_count = d4f__Menu_itemsCount(menu_current);
-
-    for (i = 0; i < item_count; i++) {
-        printf("%d) %s\n", i + 1, d4f__Menu_getItemTitle(menu_current, i));
-    }
-
-    int choice;
-    printf("Your choice: ");
-    scanf("%d", &choice);
-
-    d4f__Menu_getItemHandler(menu_current, choice - 1)();
-}
-
-void onInit() {
-    printf("Initializing app... ");
-    createMainMenu();
-    createOptionsMenu();
-
-    if (menu_main == NULL || menu_options == NULL) {
-        d4f__Menu_destroy(menu_main);
-        d4f__Menu_destroy(menu_options);
-        abort();
-    }
-
-    menu_current = menu_main;
-
-    b_running = TRUE;
-    printf("OK\n");
-}
-
-void onExit() {
-    printf("Deinitializing app... ");
-    d4f__Menu_destroy(menu_main);
-    d4f__Menu_destroy(menu_options);
-    printf("OK\n");
-    printf("Good bye!\n");
-}
+#undef D4F__MENU_NS

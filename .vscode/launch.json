@@ -2,10 +2,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "d4f__menu.test",
+            "name": "debug test",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/tests/bin/d4f__menu.test",
+            "program": "${workspaceFolder}/tests/bin/${fileBasenameNoExtension}",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/tests/bin",
