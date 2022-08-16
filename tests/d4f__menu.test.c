@@ -1,11 +1,10 @@
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
 #include "test_case.h"
+
 #define D4F__MENU_NS
 #include "d4f__menu.h"
+#undef D4F__MENU_NS
 
 Menu menu;
 void handler() {};
@@ -25,18 +24,17 @@ void length();
 void getItemTitle();
 void getItemHandler();
 
-int main() {
-    TestSuite("d4f__Menu", init);
 
-    TestCase(create);
-    TestCase(addItem);
-    TestCase(length);
-    TestCase(getItemTitle);
-    TestCase(getItemHandler);
+TestSuite("d4f__Menu", init);
 
-    TestDone(done);
-    return 0;
-}
+TestCase(create);
+TestCase(addItem);
+TestCase(length);
+TestCase(getItemTitle);
+TestCase(getItemHandler);
+
+TestDone(done);
+
 
 void init() {
     menu = Menu_create(2);
@@ -69,6 +67,3 @@ void getItemHandler() {
     MenuItemHandler item_handler = Menu_getItemHandler(menu, 0);
     assert(item_handler == options[0].handler);
 }
-
-
-#undef D4F__MENU_NS

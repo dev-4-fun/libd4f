@@ -1,9 +1,8 @@
-#include <stdio.h>
-#include <assert.h>
-
 #include "test_case.h"
+
 #define D4F__ARRAY_NS
 #include "d4f__array.h"
+#undef D4F__ARRAY_NS
 
 Array arr = NULL;
 int items[] = { 1, 2, 3, 4 };
@@ -18,19 +17,18 @@ void get(void);
 void resize(void);
 void length(void);
 
-int main() {
-    TestSuite("d4f__Array", init);
 
-    TestCase(create);
-    TestCase(clone);
-    TestCase(get);
-    TestCase(set);
-    TestCase(resize);
-    TestCase(length);
+TestSuite("d4f__Array", init);
 
-    TestDone(done);
-    return 0;
-}
+TestCase(create);
+TestCase(clone);
+TestCase(get);
+TestCase(set);
+TestCase(resize);
+TestCase(length);
+
+TestDone(done);
+
 
 void init() {
     arr = Array_create(10);
@@ -76,5 +74,3 @@ void resize() {
 void length() {
     assert((Array_length(arr)) == 15);
 }
-
-#undef D4F__ARRAY_NS
