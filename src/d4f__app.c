@@ -79,8 +79,6 @@ int d4f__App_run(d4f__App self) {
         app->onUpdate(app);
     }
 
-    app->onExit(app);
-
     return 0;
 }
 
@@ -90,4 +88,6 @@ void d4f__App_exit(d4f__App self) {
     struct d4f__App* app = self;
 
     app->b_running = FALSE;
+
+    app->onExit(app);
 }

@@ -31,6 +31,20 @@ extern "C" {
     EXTERN int d4f__App_run(d4f__App self);
     EXTERN void d4f__App_exit(d4f__App self);
 
+#ifdef D4F__APP_NS
+#define App d4f__App
+#define AppOnInitFn d4f__AppOnInitFn
+#define AppOnUpdateFn d4f__AppOnUpdateFn
+#define AppOnExitFn d4f__AppOnExitFn
+#define AppOptions d4f__AppOptions
+#define App_create d4f__App_create
+#define App_destroy d4f__App_destroy
+#define App_setOnInit d4f__App_setOnInit
+#define App_setOnExit d4f__App_setOnExit
+#define App_setOnUpdate d4f__App_setOnUpdate
+#define App_run d4f__App_run
+#define App_exit d4f__App_exit
+#endif
 
 #ifdef __cplusplus
 }
