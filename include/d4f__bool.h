@@ -5,12 +5,19 @@
 #define BOOL d4f__BOOL
 #endif
 
+#ifndef TRUE
+#define TRUE 1
+#endif
+
+#ifndef FALSE
+#define FALSE 0
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-    typedef enum d4f__BOOL {
-        FALSE, TRUE
-    } d4f__BOOL;
+
+    typedef int d4f__BOOL;
 
 #ifdef __cplusplus
 }
