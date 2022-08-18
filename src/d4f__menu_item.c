@@ -1,31 +1,29 @@
 #include <assert.h>
 #include <stdlib.h>
+#include <string.h>
 
-#include "d4f__string.h"
-
-#define D4F__MENU_ITEM_IMPORT
 #include "d4f__menu_item.h"
-#undef D4F__MENU_ITEM_IMPORT
 
-struct d4f__MenuItem {
+typedef struct d4f__MenuItem {
     char* title;
     d4f__MenuItemHandler handler;
-};
+} _d4f__MenuItem;
 
 d4f__MenuItem d4f__MenuItem_create(d4f__MenuItemOptions options) {
     assert(options.title != NULL);
     assert(options.handler != NULL);
 
-    struct d4f__MenuItem* item = malloc(sizeof(*item));
+    _d4f__MenuItem* item = malloc(sizeof(*item));
     if (item == NULL) {
         return NULL;
     }
 
-    char* title = d4f__String_create(options.title);
+    char* title = malloc(sizeof(char) * (strlen(options.title) + 1));
     if (title == NULL) {
         free(item);
         return NULL;
     }
+    strcpy(title, options.title);
 
     item->title = title;
     item->handler = options.handler;
@@ -38,18 +36,16 @@ void d4f__MenuItem_destroy(d4f__MenuItem self) {
         return;
     }
 
-    struct d4f__MenuItem* item = self;
+    _d4f__MenuItem* item = self;
 
-    d4f__String_destroy(item->title);
-
-    free(self);
-    self = NULL;
+    free(item->title);
+    free(item);
 }
 
 const char* d4f__MenuItem_getTitle(const d4f__MenuItem self) {
     assert(self != NULL);
 
-    struct d4f__MenuItem* item = self;
+    _d4f__MenuItem* item = self;
 
     return item->title;
 }
@@ -57,7 +53,7 @@ const char* d4f__MenuItem_getTitle(const d4f__MenuItem self) {
 d4f__MenuItemHandler d4f__MenuItem_getHandler(const d4f__MenuItem self) {
     assert(self != NULL);
 
-    struct d4f__MenuItem* item = self;
+    _d4f__MenuItem* item = self;
 
     return item->handler;
 }

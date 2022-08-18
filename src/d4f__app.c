@@ -2,10 +2,7 @@
 #include <assert.h>
 
 #include "d4f__bool.h"
-
-#define D4F__APP_IMPORT
 #include "d4f__app.h"
-#undef D4F__APP_IMPORT
 
 struct d4f__App {
     d4f__BOOL b_running;
@@ -35,10 +32,11 @@ d4f__App d4f__App_create(const d4f__AppOptions options) {
 }
 
 void d4f__App_destroy(d4f__App self) {
-    if (self != NULL) {
-        free(self);
-        self = NULL;
+    if (self == NULL) {
+        return;
     }
+
+    free(self);
 }
 
 void d4f__App_setOnInit(d4f__App self, d4f__AppOnInitFn fn) {

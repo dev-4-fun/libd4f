@@ -1,4 +1,4 @@
-#include "test_case.h"
+#include "test_tool.h"
 
 #define D4F__APP_NS
 #include "d4f__app.h"
@@ -27,7 +27,7 @@ void run();
 void app_exit();
 
 
-TestSuite("d4f__app", init);
+TestSuite("d4f__App", init);
 
 TestCase(create);
 TestCase(run);

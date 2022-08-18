@@ -6,34 +6,6 @@
 #include "d4f__bool.h"
 #include "d4f__menu_types.h"
 
-#ifdef D4F__MENU_IMPORT
-#define EXTERN
-#else
-#define EXTERN extern
-#endif
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-    typedef void* d4f__Menu;
-
-    EXTERN d4f__Menu d4f__Menu_create(size_t capacity);
-    EXTERN void d4f__Menu_destroy(d4f__Menu self);
-    EXTERN d4f__BOOL d4f__Menu_addItem(
-        d4f__Menu self,
-        const d4f__MenuItemOptions options
-    );
-    EXTERN size_t d4f__Menu_length(const d4f__Menu self);
-    EXTERN const char* d4f__Menu_getItemTitle(
-        const d4f__Menu self,
-        size_t index
-    );
-    EXTERN d4f__MenuItemHandler d4f__Menu_getItemHandler(
-        const d4f__Menu self,
-        size_t index
-    );
-
 #ifdef D4F__MENU_NS
 #define Menu d4f__Menu
 #define MenuItemHandler d4f__MenuItemHandler
@@ -47,9 +19,30 @@ extern "C" {
 #endif
 
 #ifdef __cplusplus
-}
+extern "C" {
 #endif
 
-#undef EXTERN
+    typedef void* d4f__Menu;
+
+    extern d4f__Menu d4f__Menu_create(size_t capacity);
+    extern void d4f__Menu_destroy(d4f__Menu self);
+    extern d4f__BOOL d4f__Menu_addItem(
+        d4f__Menu self,
+        const d4f__MenuItemOptions options
+    );
+    extern size_t d4f__Menu_length(const d4f__Menu self);
+    extern const char* d4f__Menu_getItemTitle(
+        const d4f__Menu self,
+        size_t index
+    );
+    extern d4f__MenuItemHandler d4f__Menu_getItemHandler(
+        const d4f__Menu self,
+        size_t index
+    );
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif 

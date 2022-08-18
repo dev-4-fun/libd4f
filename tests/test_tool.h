@@ -1,5 +1,5 @@
-#ifndef TEST_CASE_H
-#define TEST_CASE_H
+#ifndef TEST_TOOL_H
+#define TEST_TOOL_H
 
 #include <assert.h>
 #include <stdio.h>

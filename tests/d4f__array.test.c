@@ -1,4 +1,4 @@
-#include "test_case.h"
+#include "test_tool.h"
 
 #define D4F__ARRAY_NS
 #include "d4f__array.h"
@@ -11,6 +11,7 @@ void init(void);
 void done(void);
 
 void create(void);
+void from(void);
 void clone(void);
 void set(void);
 void get(void);
@@ -21,6 +22,7 @@ void length(void);
 TestSuite("d4f__Array", init);
 
 TestCase(create);
+TestCase(from);
 TestCase(clone);
 TestCase(get);
 TestCase(set);
@@ -40,6 +42,11 @@ void done() {
 
 void create() {
     assert(arr != NULL);
+}
+
+void from() {
+    Array clone = Array_from(items, sizeof(int), 4);
+    assert(&items[3] == Array_get(clone, 3));
 }
 
 void clone() {

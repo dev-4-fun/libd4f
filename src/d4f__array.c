@@ -1,9 +1,7 @@
 #include <stdlib.h>
 #include <assert.h>
 
-#define D4F__ARRAY_IMPORT
 #include "d4f__array.h"
-#undef D4F__ARRAY_IMPORT
 
 typedef struct d4f__Array {
     size_t capacity;
@@ -19,42 +17,53 @@ d4f__Array d4f__Array_create(const size_t capacity) {
         return NULL;
     }
 
-    array->items = calloc(capacity, sizeof(*array->items));
-    if (array->items == NULL) {
+    void** items = calloc(capacity, sizeof(*items));
+    if (items == NULL) {
         free(array);
         return NULL;
     }
-
     size_t i;
-
     for (i = 0; i < capacity; i++) {
-        array->items[i] = NULL;
+        items[i] = NULL;
     }
+
+    array->items = items;
     array->capacity = capacity;
     array->length = 0;
 
     return array;
 }
 
-void d4f__Array_destroy(d4f__Array self) {
-    assert(self != NULL);
+d4f__Array d4f__Array_from(void* array, const size_t item_size, const size_t array_length) {
+    assert(array != NULL);
 
-    _d4f__Array* array = self;
-    free(array->items);
-    array->items = NULL;
+    _d4f__Array* clone = d4f__Array_create(array_length);
+    if (clone == NULL) {
+        return NULL;
+    }
 
-    free(self);
-    self = NULL;
+    size_t i;
+    void* p = array;
+    for (i = 0; i < array_length; i++) {
+        clone->items[i] = p;
+        p += item_size;
+    }
+
+    clone->length = array_length;
+
+    return clone;
 }
-
 
 d4f__Array d4f__Array_clone(const d4f__Array self) {
     assert(self != NULL);
 
+    size_t i;
     _d4f__Array* array = self;
     _d4f__Array* clone = d4f__Array_create(array->capacity);
+    if (clone == NULL) {
+        return NULL;
+    }
 
-    size_t i;
     for (i = 0; i < array->length; i++) {
         clone->items[i] = array->items[i];
     }
@@ -62,6 +71,15 @@ d4f__Array d4f__Array_clone(const d4f__Array self) {
     clone->length = array->length;
 
     return clone;
+}
+
+void d4f__Array_destroy(d4f__Array self) {
+    assert(self != NULL);
+
+    _d4f__Array* array = self;
+
+    free(array->items);
+    free(array);
 }
 
 
