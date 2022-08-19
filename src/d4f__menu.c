@@ -27,6 +27,17 @@ d4f__Menu d4f__Menu_create(size_t capacity) {
     return self;
 }
 
+d4f__Menu d4f__Menu_from(d4f__MenuItemOptions* options, const size_t options_length) {
+    _d4f__Menu* self = d4f__Menu_create(options_length);
+
+    size_t i;
+    for (i = 0; i < options_length; i++) {
+        d4f__Menu_addItem(self, options[i]);
+    }
+
+    return self;
+}
+
 void d4f__Menu_destroy(d4f__Menu self) {
     if (self == NULL) {
         return;

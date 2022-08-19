@@ -14,8 +14,9 @@ void onAppExit() {
     on_exit_called = 1;
 }
 int on_update_called = 0;
-void onAppUpdate() {
+void onAppUpdate(float f_elapsed) {
     on_update_called = 1;
+    assert(f_elapsed > 0);
     App_exit(app);
 }
 

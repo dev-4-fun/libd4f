@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <assert.h>
+#include <time.h>
 
 #include "d4f__bool.h"
 #include "d4f__app.h"
@@ -26,7 +27,9 @@ d4f__App d4f__App_create(const d4f__AppOptions options) {
     app->onUpdate = options.onUpdate;
     app->onExit = options.onExit;
 
-    app->onInit(app);
+    atexit(app->onExit);
+
+    app->onInit();
 
     return app;
 }
@@ -39,33 +42,6 @@ void d4f__App_destroy(d4f__App self) {
     free(self);
 }
 
-void d4f__App_setOnInit(d4f__App self, d4f__AppOnInitFn fn) {
-    assert(self != NULL);
-    assert(fn != NULL);
-
-    struct d4f__App* app = self;
-
-    app->onInit = fn;
-}
-
-void d4f__App_setOnUpdate(d4f__App self, d4f__AppOnUpdateFn fn) {
-    assert(self != NULL);
-    assert(fn != NULL);
-
-    struct d4f__App* app = self;
-
-    app->onUpdate = fn;
-}
-
-void d4f__App_setOnExit(d4f__App self, d4f__AppOnExitFn fn) {
-    assert(self != NULL);
-    assert(fn != NULL);
-
-    struct d4f__App* app = self;
-
-    app->onExit = fn;
-}
-
 int d4f__App_run(d4f__App self) {
     assert(self != NULL);
 
@@ -74,7 +50,7 @@ int d4f__App_run(d4f__App self) {
     app->b_running = TRUE;
 
     while (app->b_running) {
-        app->onUpdate(app);
+        app->onUpdate((float)clock() / CLOCKS_PER_SEC);
     }
 
     return 0;
@@ -87,5 +63,5 @@ void d4f__App_exit(d4f__App self) {
 
     app->b_running = FALSE;
 
-    app->onExit(app);
+    app->onExit();
 }
