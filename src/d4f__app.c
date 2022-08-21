@@ -13,10 +13,6 @@ struct d4f__App {
 };
 
 d4f__App d4f__App_create(const d4f__AppOptions options) {
-    assert(options.onInit != NULL);
-    assert(options.onUpdate != NULL);
-    assert(options.onExit != NULL);
-
     struct d4f__App* app = malloc(sizeof(*app));
     if (app == NULL) {
         return NULL;
@@ -27,9 +23,9 @@ d4f__App d4f__App_create(const d4f__AppOptions options) {
     app->onUpdate = options.onUpdate;
     app->onExit = options.onExit;
 
-    atexit(app->onExit);
-
-    app->onInit();
+    if (app->onInit != NULL) {
+        app->onInit();
+    }
 
     return app;
 }
@@ -50,7 +46,9 @@ int d4f__App_run(d4f__App self) {
     app->b_running = TRUE;
 
     while (app->b_running) {
-        app->onUpdate((float)clock() / CLOCKS_PER_SEC);
+        if (app->onUpdate != NULL) {
+            app->onUpdate((float)clock() / CLOCKS_PER_SEC);
+        }
     }
 
     return 0;
@@ -63,5 +61,7 @@ void d4f__App_exit(d4f__App self) {
 
     app->b_running = FALSE;
 
-    app->onExit();
+    if (app->onExit != NULL) {
+        app->onExit();
+    }
 }
