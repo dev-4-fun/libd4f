@@ -1,65 +1,54 @@
 #include "test_tool.h"
 
-#define D4F__APP_NS
-#include "d4f__app.h"
-#undef D4F__APP_NS
+#define D4FLIB_NS
+#include "d4flib.h"
+#undef D4FLIB_NS
 
-App app;
 int on_init_called = 0;
-void onAppInit() {
+int onAppInit() {
     on_init_called = 1;
+
+    return 0;
 }
+
 int on_exit_called = 0;
-void onAppExit() {
+int onAppExit() {
     on_exit_called = 1;
+
+    return 0;
 }
+
 int on_update_called = 0;
-void onAppUpdate(float f_elapsed) {
+int onAppUpdate() {
     on_update_called = 1;
-    assert(f_elapsed > 0);
-    App_exit(app);
+
+    return App_exit();
 }
 
 void init();
 void done();
 
-void create();
 void run();
-void app_exit();
 
 
 TestSuite("d4f__App", init);
 
-TestCase(create);
 TestCase(run);
-TestCase(app_exit);
 
 TestDone(done);
 
 
 void init() {
-    app = App_create((AppOptions) {
+    App_init((AppOptions) {
         .onExit = onAppExit, .onInit = onAppInit, .onUpdate = onAppUpdate,
     });
 }
 
-void done() {
-    App_destroy(app);
-}
-
-void create() {
-    assert(app != NULL);
-    assert(on_init_called == 1);
-}
+void done() {}
 
 void run() {
-    App_run(app);
+    assert(on_init_called == 1);
+    App_run();
     assert(on_update_called == 1);
-    assert(on_exit_called == 1);
-    on_exit_called = 0;
-}
-
-void app_exit() {
-    App_exit(app);
     assert(on_exit_called == 1);
 }

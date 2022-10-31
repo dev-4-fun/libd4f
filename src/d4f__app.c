@@ -1,67 +1,48 @@
 #include <stdlib.h>
-#include <assert.h>
-#include <time.h>
 
 #include "d4f__bool.h"
+
+#define D4F__APP_H_IMPL
 #include "d4f__app.h"
+#undef D4F__APP_H_IMPL
 
-struct d4f__App {
-    d4f__BOOL b_running;
-    d4f__AppOnInitFn onInit;
-    d4f__AppOnUpdateFn onUpdate;
-    d4f__AppOnExitFn onExit;
-};
+static d4f__BOOL quit_flag;
+static d4f__AppOnInitFn onInit;
+static d4f__AppOnExitFn onExit;
+static d4f__AppOnUpdateFn onUpdate;
 
-d4f__App d4f__App_create(const d4f__AppOptions options) {
-    struct d4f__App* app = malloc(sizeof(*app));
-    if (app == NULL) {
-        return NULL;
+int d4f__App_init(const d4f__AppOptions options) {
+    quit_flag = FALSE;
+
+    onInit = options.onInit;
+    onExit = options.onExit;
+    onUpdate = options.onUpdate;
+
+    if (onInit != NULL) {
+        return onInit();
     }
-
-    app->b_running = FALSE;
-    app->onInit = options.onInit;
-    app->onUpdate = options.onUpdate;
-    app->onExit = options.onExit;
-
-    if (app->onInit != NULL) {
-        app->onInit();
-    }
-
-    return app;
-}
-
-void d4f__App_destroy(d4f__App self) {
-    if (self == NULL) {
-        return;
-    }
-
-    free(self);
-}
-
-int d4f__App_run(d4f__App self) {
-    assert(self != NULL);
-
-    struct d4f__App* app = self;
-
-    app->b_running = TRUE;
-
-    while (app->b_running) {
-        if (app->onUpdate != NULL) {
-            app->onUpdate((float)clock() / CLOCKS_PER_SEC);
-        }
-    }
-
     return 0;
 }
 
-void d4f__App_exit(d4f__App self) {
-    assert(self != NULL);
+int d4f__App_run() {
+    int app_status = 0;
+    quit_flag = FALSE;
 
-    struct d4f__App* app = self;
-
-    app->b_running = FALSE;
-
-    if (app->onExit != NULL) {
-        app->onExit();
+    if (onUpdate != NULL) {
+        while (quit_flag == FALSE) {
+            app_status = onUpdate();
+        }
     }
+
+    return app_status;
+}
+
+int d4f__App_exit() {
+    quit_flag = TRUE;
+
+    if (onExit != NULL) {
+        return onExit();
+    }
+
+    return 0;
 }

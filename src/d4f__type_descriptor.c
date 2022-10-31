@@ -1,5 +1,6 @@
 #include <stdarg.h>
 #include <stdlib.h>
+#include <assert.h>
 
 #include "d4f__type_descriptor.h"
 
