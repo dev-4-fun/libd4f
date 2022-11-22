@@ -26,7 +26,6 @@ int d4f__App_init(const d4f__AppOptions options) {
 
 int d4f__App_run() {
     int app_status = 0;
-    quit_flag = FALSE;
 
     if (onUpdate != NULL) {
         while (quit_flag == FALSE) {

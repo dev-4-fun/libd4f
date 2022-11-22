@@ -1,5 +1,5 @@
-#ifndef D4F__APP_H
-#define D4F__APP_H
+#ifndef _d4f__app_h
+#define _d4f__app_h
 
 #include "d4f__bool.h"
 
@@ -13,7 +13,7 @@
 #define App_exit d4f__App_exit
 #endif
 
-#ifndef D4F__APP_H_IMPL
+#ifndef _d4f__app_h_IMPL
 #define EXTERN extern
 #else
 #define EXTERN
@@ -43,4 +43,4 @@ extern "C" {
 
 #undef EXTERN
 
-#endif
+#endif /* !_d4f__app_h */

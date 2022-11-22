@@ -1,5 +1,5 @@
-#ifndef D4F__BOOL_H
-#define D4F__BOOL_H
+#ifndef _d4f__bool_h
+#define _d4f__bool_h
 
 #ifdef D4F__BOOL_NS
 #define BOOL d4f__BOOL
@@ -23,4 +23,4 @@ extern "C" {
 }
 #endif
 
-#endif
+#endif /* !_d4f__bool_h */
