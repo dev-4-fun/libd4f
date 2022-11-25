@@ -31,6 +31,10 @@ int d4f__App_run() {
         while (quit_flag == FALSE) {
             app_status = onUpdate();
         }
+
+        if (onExit) {
+            app_status = onExit();
+        }
     }
 
     return app_status;
@@ -38,10 +42,6 @@ int d4f__App_run() {
 
 int d4f__App_exit() {
     quit_flag = TRUE;
-
-    if (onExit != NULL) {
-        return onExit();
-    }
 
     return 0;
 }
