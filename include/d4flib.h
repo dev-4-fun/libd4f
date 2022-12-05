@@ -10,5 +10,6 @@
 #include "d4f__app.h"
 #include "d4f__bool.h"
 #include "d4f__coord2d.h"
+#include "d4f__logger.h"
 
 #endif /* !_d4flib_h */
