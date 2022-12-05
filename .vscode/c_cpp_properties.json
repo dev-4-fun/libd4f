@@ -3,6 +3,7 @@
         {
             "name": "libd4f config",
             "includePath": [
+                "${workspaceFolder}/include",
                 "${workspaceFolder}/include"
             ],
             "defines": [],
