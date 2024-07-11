@@ -13,31 +13,29 @@ typedef struct TypeDescriptor {
 } TypeDescriptor;
 
 void* d4f__new(const void* type, ...) {
+	TypeDescriptor* td;
+	void* new_object;
+
     assert(type != NULL);
-
-    TypeDescriptor* td = (TypeDescriptor*)type;
-
-    void* new_object = malloc(td->size);
+    td = (TypeDescriptor*)type;
+    new_object = malloc(td->size);
     assert(new_object != NULL);
-
     *(TypeDescriptor**)new_object = td;
-
     if (td->ctor != NULL) {
         va_list args;
         va_start(args, type);
         td->ctor(new_object, &args);
         va_end(args);
     }
-
     return new_object;
 }
 
 void d4f__delete(void* self) {
-    TypeDescriptor* td = *(TypeDescriptor**)self;
-
+    TypeDescriptor* td;
+	
+	td = *(TypeDescriptor**)self;
     if (td->dtor != NULL) {
         td->dtor(self);
     }
-
     free(self);
 }

@@ -34,8 +34,8 @@ extern "C" {
     } d4f__AppOptions;
 
     EXTERN d4f__BOOL d4f__App_init(const d4f__AppOptions options);
-    EXTERN int d4f__App_run();
-    EXTERN int d4f__App_exit();
+    EXTERN int d4f__App_run(void);
+    EXTERN int d4f__App_exit(void);
 
 #ifdef __cplusplus
 }
@@ -44,3 +44,4 @@ extern "C" {
 #undef EXTERN
 
 #endif /* !_d4f__app_h */
+

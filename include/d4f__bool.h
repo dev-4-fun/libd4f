@@ -24,3 +24,4 @@ extern "C" {
 #endif
 
 #endif /* !_d4f__bool_h */
+

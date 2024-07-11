@@ -24,7 +24,7 @@ int d4f__App_init(const d4f__AppOptions options) {
     return 0;
 }
 
-int d4f__App_run() {
+int d4f__App_run(void) {
     int app_status = 0;
 
     if (onUpdate != NULL) {
@@ -40,7 +40,7 @@ int d4f__App_run() {
     return app_status;
 }
 
-int d4f__App_exit() {
+int d4f__App_exit(void) {
     quit_flag = TRUE;
 
     return 0;

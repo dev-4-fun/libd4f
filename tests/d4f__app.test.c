@@ -5,48 +5,49 @@
 #undef D4FLIB_NS
 
 int on_init_called = 0;
-int onAppInit() {
+int onAppInit(void) {
     on_init_called = 1;
 
     return 0;
 }
 
 int on_exit_called = 0;
-int onAppExit() {
+int onAppExit(void) {
     on_exit_called = 1;
 
     return 0;
 }
 
 int on_update_called = 0;
-int onAppUpdate() {
+int onAppUpdate(void) {
     on_update_called = 1;
 
     return App_exit();
 }
 
-void init();
-void done();
+void init(void);
+void done(void);
 
-void run();
-
-
-TestSuite("d4f__App", init);
-
-TestCase(run);
-
-TestDone(done);
+void run(void);
 
 
-void init() {
-    App_init((AppOptions) {
+TestSuite("d4f__App", init)
+
+TestCase(run)
+
+TestDone(done)
+
+
+void init(void) {
+	const AppOptions options = {
         .onExit = onAppExit, .onInit = onAppInit, .onUpdate = onAppUpdate,
-    });
+	};
+    App_init(options);
 }
 
-void done() {}
+void done(void) {}
 
-void run() {
+void run(void) {
     assert(on_init_called == 1);
     App_run();
     assert(on_update_called == 1);

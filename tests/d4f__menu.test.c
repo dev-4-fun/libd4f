@@ -7,7 +7,7 @@
 #undef D4F__MENU_NS
 
 Menu menu;
-void handler() {};
+void handler(void) {}
 MenuItemOptions options[] = {
     {
         .title = "Title",
@@ -15,55 +15,55 @@ MenuItemOptions options[] = {
     },
 };
 
-void init();
-void done();
+void init(void);
+void done(void);
 
-void create();
-void addItem();
-void length();
-void getItemTitle();
-void getItemHandler();
-
-
-TestSuite("d4f__Menu", init);
-
-TestCase(create);
-TestCase(addItem);
-TestCase(length);
-TestCase(getItemTitle);
-TestCase(getItemHandler);
-
-TestDone(done);
+void create(void);
+void addItem(void);
+void length(void);
+void getItemTitle(void);
+void getItemHandler(void);
 
 
-void init() {
+TestSuite("d4f__Menu", init)
+
+TestCase(create)
+TestCase(addItem)
+TestCase(length)
+TestCase(getItemTitle)
+TestCase(getItemHandler)
+
+TestDone(done)
+
+
+void init(void) {
     menu = Menu_create(2);
 }
 
-void done() {
+void done(void) {
     Menu_destroy(menu);
 }
 
-void create() {
+void create(void) {
     assert(menu != NULL);
 }
 
-void addItem() {
+void addItem(void) {
     Menu_addItem(menu, options[0]);
 }
 
-void length() {
+void length(void) {
     size_t length = Menu_length(menu);
     assert(length = 1);
 }
 
-void getItemTitle() {
+void getItemTitle(void) {
     const char* title = Menu_getItemTitle(menu, 0);
     int result = strcmp(title, options[0].title);
     assert(result == 0);
 }
 
-void getItemHandler() {
+void getItemHandler(void) {
     MenuItemHandler item_handler = Menu_getItemHandler(menu, 0);
     assert(item_handler == options[0].handler);
 }

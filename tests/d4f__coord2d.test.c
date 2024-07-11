@@ -9,15 +9,15 @@ void done(void);
 
 void collide(void);
 
-TestSuite("d4f__Coord2d", init);
-TestCase(collide);
-TestDone(done);
+TestSuite("d4f__Coord2d", init)
+TestCase(collide)
+TestDone(done)
 
-void init() {}
+void init(void) {}
 
-void done() {}
+void done(void) {}
 
-void collide() {
+void collide(void) {
     d4f__Coord2d a = { .x = 1, .y = 1 };
     d4f__Coord2d b = { .x = 1, .y = 1 };
     assert(d4f__Coord2d_collide(a, b));

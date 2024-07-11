@@ -36,3 +36,4 @@ extern "C" {
 #endif
 
 #endif /* !D4F__QUEUE_H */
+

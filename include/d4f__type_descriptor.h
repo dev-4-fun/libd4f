@@ -16,3 +16,4 @@ extern "C" {
 #endif
 
 #endif /* !d4f__type_descriptor_h */
+

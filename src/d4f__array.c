@@ -10,19 +10,22 @@ typedef struct d4f__Array {
 } _d4f__Array;
 
 d4f__Array d4f__Array_create(const size_t capacity) {
+	_d4f__Array* array;
+	void** items;
+	size_t i;
+
     assert(capacity > 0);
 
-    _d4f__Array* array = malloc(sizeof(*array));
+    array = malloc(sizeof(*array));
     if (array == NULL) {
         return NULL;
     }
 
-    void** items = calloc(capacity, sizeof(*items));
+    items = calloc(capacity, sizeof(*items));
     if (items == NULL) {
         free(array);
         return NULL;
     }
-    size_t i;
     for (i = 0; i < capacity; i++) {
         items[i] = NULL;
     }
@@ -35,18 +38,21 @@ d4f__Array d4f__Array_create(const size_t capacity) {
 }
 
 d4f__Array d4f__Array_from(void* array, const size_t item_size, const size_t array_length) {
+	_d4f__Array* clone;
+	size_t i;
+	void* p;
+
     assert(array != NULL);
 
-    _d4f__Array* clone = d4f__Array_create(array_length);
+    clone = d4f__Array_create(array_length);
     if (clone == NULL) {
         return NULL;
     }
 
-    size_t i;
-    void* p = array;
+    p = array;
     for (i = 0; i < array_length; i++) {
         clone->items[i] = p;
-        p += item_size;
+        p = (char *)p + item_size;
     }
 
     clone->length = array_length;
@@ -55,11 +61,13 @@ d4f__Array d4f__Array_from(void* array, const size_t item_size, const size_t arr
 }
 
 d4f__Array d4f__Array_clone(const d4f__Array self) {
+	_d4f__Array* array;
+	_d4f__Array* clone;
+    size_t i;
     assert(self != NULL);
 
-    size_t i;
-    _d4f__Array* array = self;
-    _d4f__Array* clone = d4f__Array_create(array->capacity);
+    array = self;
+    clone = d4f__Array_create(array->capacity);
     if (clone == NULL) {
         return NULL;
     }
@@ -74,9 +82,10 @@ d4f__Array d4f__Array_clone(const d4f__Array self) {
 }
 
 void d4f__Array_destroy(d4f__Array self) {
+	_d4f__Array* array;
     assert(self != NULL);
 
-    _d4f__Array* array = self;
+    array = self;
 
     free(array->items);
     free(array);
@@ -84,9 +93,10 @@ void d4f__Array_destroy(d4f__Array self) {
 
 
 void* d4f__Array_get(const d4f__Array self, const size_t index) {
+	_d4f__Array* array;
     assert(self != NULL);
 
-    _d4f__Array* array = self;
+    array = self;
     assert(index < array->capacity);
 
     return array->items[index];
@@ -94,9 +104,10 @@ void* d4f__Array_get(const d4f__Array self, const size_t index) {
 
 
 void d4f__Array_set(d4f__Array self, const size_t index, void* item) {
+	_d4f__Array* array;
     assert(self != NULL);
 
-    _d4f__Array* array = self;
+    array = self;
     assert(index < array->capacity);
 
     array->items[index] = item;
@@ -105,22 +116,26 @@ void d4f__Array_set(d4f__Array self, const size_t index, void* item) {
 }
 
 size_t d4f__Array_length(const d4f__Array self) {
+	_d4f__Array* array;
     assert(self != NULL);
 
-    _d4f__Array* array = self;
+    array = self;
 
     return array->length;
 }
 
 void d4f__Array_resize(d4f__Array self, const size_t new_capacity) {
+    _d4f__Array* array;
+	void** reallocated_items;
+	size_t i;
+
     assert(self != NULL);
 
-    _d4f__Array* array = self;
+    array = self;
     assert(array->length <= new_capacity);
 
-    void** reallocated_items = calloc(sizeof(*reallocated_items), new_capacity);
+    reallocated_items = calloc(sizeof(*reallocated_items), new_capacity);
 
-    size_t i;
     for (i = 0; i < array->length; i++) {
         reallocated_items[i] = array->items[i];
     }

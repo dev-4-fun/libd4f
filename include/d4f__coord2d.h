@@ -29,3 +29,4 @@ EXTERN d4f__BOOL d4f__Coord2d_collide(const d4f__Coord2d a, const d4f__Coord2d b
 #undef EXTERN
 
 #endif /* !_d4f__coord2d_h */
+

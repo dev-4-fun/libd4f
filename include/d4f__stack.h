@@ -1,11 +1,11 @@
-#ifndef D4F__STACK_H
-#define D4F__STACK_H
+#ifndef d4f__stack_h
+#define d4f__stack_h
 
 #include <stdlib.h>
 
 #include "d4f__bool.h"
 
-#ifdef D4F__STACK_NS
+#ifdef d4f__stack_ns
 #define Stack d4f__Stack
 #define Stack_create d4f__Stack_create
 #define Stack_from d4f__Stack_from
@@ -34,4 +34,5 @@ extern "C" {
 }
 #endif
 
-#endif /* !D4F__STACK_H */
+#endif /* !d4f__stack_h */
+

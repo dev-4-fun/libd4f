@@ -19,37 +19,37 @@ void resize(void);
 void length(void);
 
 
-TestSuite("d4f__Array", init);
+TestSuite("d4f__Array", init)
 
-TestCase(create);
-TestCase(from);
-TestCase(clone);
-TestCase(get);
-TestCase(set);
-TestCase(resize);
-TestCase(length);
+TestCase(create)
+TestCase(from)
+TestCase(clone)
+TestCase(get)
+TestCase(set)
+TestCase(resize)
+TestCase(length)
 
-TestDone(done);
+TestDone(done)
 
 
-void init() {
+void init(void) {
     arr = Array_create(10);
 }
 
-void done() {
+void done(void) {
     Array_destroy(arr);
 }
 
-void create() {
+void create(void) {
     assert(arr != NULL);
 }
 
-void from() {
+void from(void) {
     Array clone = Array_from(items, sizeof(int), 4);
     assert(&items[3] == Array_get(clone, 3));
 }
 
-void clone() {
+void clone(void) {
     Array clone = Array_clone(arr);
 
     assert(clone != arr);
@@ -60,24 +60,24 @@ void clone() {
     Array_destroy(clone);
 }
 
-void get() {
+void get(void) {
     int* x = Array_get(arr, 0);
     assert(x == NULL);
 }
 
-void set() {
+void set(void) {
     int* p_element;
     Array_set(arr, 0, &items[1]);
     p_element = Array_get(arr, 0);
     assert(&items[1] == p_element);
 }
 
-void resize() {
+void resize(void) {
     Array_resize(arr, 15);
     Array_set(arr, 14, &items[2]);
     assert((Array_get(arr, 14)) != NULL);
 }
 
-void length() {
+void length(void) {
     assert((Array_length(arr)) == 15);
 }

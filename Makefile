@@ -9,7 +9,7 @@ OBJECT_DIR=./obj
 TEST_DIR=./tests
 
 CC = clang
-CFLAGS = -std=c89 -Wall -Wextra -Werror -g -I$(INCLUDE_DIR)
+CFLAGS = -std=c89 -Wall -Wextra -Werror -Wpedantic -g -I$(INCLUDE_DIR)
 
 SOURCES = $(wildcard $(SOURCE_DIR)/*.c)
 LIB_OBJECTS = $(patsubst $(SOURCE_DIR)/%.c, $(OBJECT_DIR)/%.o, $(SOURCES))

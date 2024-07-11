@@ -18,28 +18,28 @@ void clone(void);
 void add_next_length(void);
 
 
-TestSuite("d4f__Queue", init);
+TestSuite("d4f__Queue", init)
 
-TestCase(create);
-TestCase(from);
-TestCase(clone);
-TestCase(add_next_length);
+TestCase(create)
+TestCase(from)
+TestCase(clone)
+TestCase(add_next_length)
 
-TestDone(done);
+TestDone(done)
 
-void init() {
+void init(void) {
     queue = Queue_create();
 }
 
-void done() {
+void done(void) {
     Queue_destroy(queue);
 }
 
-void create() {
+void create(void) {
     assert(queue != NULL);
 }
 
-void from() {
+void from(void) {
     Queue clone = Queue_from(items, sizeof(int), 4);
     assert(clone != NULL);
     assert(Queue_length(clone) == 4);
@@ -47,7 +47,7 @@ void from() {
     Queue_destroy(clone);
 }
 
-void clone() {
+void clone(void) {
     Queue clone = Queue_clone(queue);
     assert(clone != NULL);
     assert(clone != queue);
@@ -55,7 +55,7 @@ void clone() {
     Queue_destroy(clone);
 }
 
-void add_next_length() {
+void add_next_length(void) {
     size_t length = Queue_length(queue);
     assert(Queue_add(queue, &items[0]) != FALSE);
     assert(Queue_length(queue) == length + 1);
