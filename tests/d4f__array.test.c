@@ -33,7 +33,7 @@ TestDone(done)
 
 
 void init(void) {
-    arr = Array_create(10);
+    arr = Array_create(10, sizeof(int));
 }
 
 void done(void) {
@@ -45,37 +45,42 @@ void create(void) {
 }
 
 void from(void) {
-    Array clone = Array_from(items, sizeof(int), 4);
-    assert(&items[3] == Array_get(clone, 3));
+    Array clone = Array_from((byte *)items, sizeof(int), 4);
+    assert(&items[3] == (int *)Array_at(clone, 3));
 }
 
 void clone(void) {
+	int* p_element;
     Array clone = Array_clone(arr);
 
     assert(clone != arr);
-    assert((Array_get(clone, 0)) == (Array_get(arr, 0)));
-    Array_set(clone, 0, &items[0]);
-    assert((Array_get(clone, 0)) != (Array_get(arr, 0)));
+    assert(*(Array_at(clone, 0)) == *(Array_at(arr, 0)));
+	p_element = (int *)Array_at(clone, 0);
+	*p_element = items[0];
+    assert(*(Array_at(clone, 0)) != *(Array_at(arr, 0)));
 
     Array_destroy(clone);
 }
 
 void get(void) {
-    int* x = Array_get(arr, 0);
-    assert(x == NULL);
+    int* x = (int *)Array_at(arr, 0);
+    assert(*x == 0);
 }
 
 void set(void) {
     int* p_element;
-    Array_set(arr, 0, &items[1]);
-    p_element = Array_get(arr, 0);
-    assert(&items[1] == p_element);
+    p_element = (int *)Array_at(arr, 0);
+	*p_element = items[1];
+    p_element = (int *)Array_at(arr, 0);
+    assert(items[1] == *p_element);
 }
 
 void resize(void) {
+	int* p_element;
     Array_resize(arr, 15);
-    Array_set(arr, 14, &items[2]);
-    assert((Array_get(arr, 14)) != NULL);
+    p_element = (int *)Array_at(arr, 14);
+	*p_element = items[2];
+    assert((Array_at(arr, 14)) != NULL);
 }
 
 void length(void) {

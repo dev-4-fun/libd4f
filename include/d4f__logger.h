@@ -10,16 +10,16 @@ extern "C" {
 #endif
 
 #define d4f__log(format) \
-	_d4f__log(stdout, "%s:%d \x1b[32m[LOG]" format "\x1b[0m\n", __FILE__, __LINE__)
+	_d4f__log(stdout, "%s:%d \x1b[32m[LOG]: " format "\x1b[0m\n", __FILE__, __LINE__)
 
 #define d4f__log1(format, arg1) \
-	_d4f__log(stdout, "%s:%d \x1b[32m[LOG]" format "\x1b[0m\n", __FILE__, __LINE__, arg1)
+	_d4f__log(stdout, "%s:%d \x1b[32m[LOG]: " format "\x1b[0m\n", __FILE__, __LINE__, arg1)
 
 #define d4f__log2(format, arg1, arg2) \
-	_d4f__log(stdout, "%s:%d \x1b[32m[LOG]" format "\x1b[0m\n", __FILE__, __LINE__, arg1, arg2)
+	_d4f__log(stdout, "%s:%d \x1b[32m[LOG]: " format "\x1b[0m\n", __FILE__, __LINE__, arg1, arg2)
 
 #define d4f__log3(format, arg1, arg2, arg3) \
-	_d4f__log(stdout, "%s:%d \x1b[32m[LOG]" format "\x1b[0m\n", __FILE__, __LINE__, arg1, arg2, arg3)
+	_d4f__log(stdout, "%s:%d \x1b[32m[LOG]: " format "\x1b[0m\n", __FILE__, __LINE__, arg1, arg2, arg3)
 
 #define d4f__warn(format) \
     _d4f__log(stdout, "%s:%d \x1b[33m[WARNING]: " format "\x1b[0m\n", __FILE__, __LINE__)
